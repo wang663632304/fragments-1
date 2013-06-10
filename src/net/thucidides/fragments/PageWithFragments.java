@@ -1,11 +1,14 @@
 package net.thucidides.fragments;
 
+import com.google.common.base.Predicate;
+import com.google.inject.Injector;
 import net.thucidides.fragments.elements.Fragment;
 import net.thucidides.fragments.locators.DefaultElementLocator;
 import net.thucydides.core.pages.PageObject;
 import org.openqa.selenium.*;
 import org.openqa.selenium.internal.WrapsElement;
 
+import javax.annotation.Nullable;
 import java.net.URL;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
@@ -24,8 +27,13 @@ public class PageWithFragments extends PageObject implements IFragmentContext, S
 	 */
 	private final String contextName = null;
 	
-	public PageWithFragments(WebDriver webDriver){
-		super(webDriver);
+	public PageWithFragments(WebDriver webDriver, final Injector injector){
+		super(webDriver, new Predicate<PageObject>() {
+            public boolean apply(@Nullable PageObject input) {
+                FragmentFactory.initPageFragments((PageWithFragments)input, injector);
+                return true;
+            }
+        });
 	}
 	
 	public String getName() { return contextName; }

@@ -22,11 +22,11 @@ import java.util.List;
  */
 public class FragmentFactory {
 	
-	private static final String FRAGMENT_FIELD_LOCATOR = "locators";
+	private static final String FRAGMENT_FIELD_LOCATOR = "locator";
 	private static final String FRAGMENT_FIELD_PARENT = "parent";
 	private static final String FRAGMENT_FIELD_WRAPPED = "wrapped";
-	private static final String FRAGMENT_FIELD_FACTORY = "";
-	private static final String FRAGMENT_FIELD_NAME = "";
+	private static final String FRAGMENT_FIELD_FACTORY = "fragmentFactory";
+	private static final String FRAGMENT_FIELD_NAME = "contextName";
 	
 	private static final String PAGE_FIELD_FACTORY = "fragmentFactory";
 	private static final String PAGE_FIELD_NAME = "contextName";
