@@ -1,5 +1,15 @@
 package net.thucidides.fragments.proxy;
 
+import com.google.common.base.Function;
+import net.thucidides.fragments.FragmentFactory;
+import net.thucidides.fragments.FragmentSettings;
+import net.thucidides.fragments.elements.Fragment;
+import org.openqa.selenium.NoSuchElementException;
+import org.openqa.selenium.WebDriverException;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.pagefactory.ElementLocator;
+import org.openqa.selenium.support.ui.FluentWait;
+
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -7,18 +17,6 @@ import java.lang.reflect.UndeclaredThrowableException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
-
-import net.thucidides.fragments.Fragment;
-import net.thucidides.fragments.FragmentFactory;
-import net.thucidides.fragments.FragmentSettings;
-
-import org.openqa.selenium.NoSuchElementException;
-import org.openqa.selenium.WebDriverException;
-import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.pagefactory.ElementLocator;
-import org.openqa.selenium.support.ui.FluentWait;
-
-import com.google.common.base.Function;
 
 import static net.thucidides.fragments.utils.StackTraceUtils.cleanStackTrace;
 
@@ -39,7 +37,7 @@ public class ListLoader<F extends Fragment<?>> implements InvocationHandler {
 		}
 		
 		public List<WebElement> findElements() {
-			throw new UnsupportedOperationException("Finding for elements inside list item locator");
+			throw new UnsupportedOperationException("Finding for elements inside list item locators");
 		}
 		
 		public String toString() { return locator.toString(); }

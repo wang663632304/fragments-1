@@ -1,20 +1,16 @@
 package net.thucidides.fragments;
 
-import static net.thucidides.fragments.utils.XPathFunctions.containstext;
+import net.thucidides.fragments.elements.Fragment;
+import net.thucidides.fragments.locators.DefaultElementLocator;
+import net.thucydides.core.pages.PageObject;
+import org.openqa.selenium.*;
+import org.openqa.selenium.internal.WrapsElement;
 
 import java.net.URL;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
-import net.thucidides.fragments.locator.DefaultElementLocator;
-import net.thucydides.core.pages.PageObject;
-
-import org.openqa.selenium.By;
-import org.openqa.selenium.Cookie;
-import org.openqa.selenium.SearchContext;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
-import org.openqa.selenium.internal.WrapsElement;
+import static net.thucidides.fragments.utils.XPathFunctions.containstext;
 
 public class PageWithFragments extends PageObject implements IFragmentContext, SearchContext {
 	

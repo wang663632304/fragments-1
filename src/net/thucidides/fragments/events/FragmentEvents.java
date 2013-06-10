@@ -1,9 +1,9 @@
-package net.thucidides.fragments.event;
-
-import java.util.concurrent.Executors;
+package net.thucidides.fragments.events;
 
 import com.google.common.eventbus.AsyncEventBus;
 import com.google.common.eventbus.EventBus;
+
+import java.util.concurrent.Executors;
 
 public class FragmentEvents {
 	

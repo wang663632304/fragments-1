@@ -1,8 +1,8 @@
-package net.thucidides.fragments.locator;
-
-import java.lang.reflect.Field;
+package net.thucidides.fragments.locators;
 
 import org.openqa.selenium.By;
+
+import java.lang.reflect.Field;
 
 public interface ILocatorResolver {
 

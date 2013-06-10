@@ -1,31 +1,28 @@
-package net.thucidides.fragments;
+package net.thucidides.fragments.elements;
 
-import static net.thucidides.fragments.utils.XPathFunctions.containstext;
+import com.google.common.base.Predicate;
+import net.thucidides.fragments.FragmentFactory;
+import net.thucidides.fragments.FragmentSettings;
+import net.thucidides.fragments.IFragmentContext;
+import net.thucidides.fragments.PageWithFragments;
+import net.thucidides.fragments.events.FragmentEvent;
+import net.thucidides.fragments.events.FragmentEvents;
+import net.thucidides.fragments.locators.DefaultElementLocator;
+import net.thucidides.fragments.utils.JSActions;
+import net.thucidides.fragments.utils.PageUtils;
+import org.openqa.selenium.*;
+import org.openqa.selenium.internal.WrapsElement;
+import org.openqa.selenium.support.ui.FluentWait;
 
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
-import net.thucidides.fragments.event.FragmentEvent;
-import net.thucidides.fragments.event.FragmentEvents;
-import net.thucidides.fragments.locator.DefaultElementLocator;
-import net.thucidides.fragments.utils.JSActions;
-import net.thucidides.fragments.utils.PageUtils;
-
-import org.openqa.selenium.By;
-import org.openqa.selenium.Dimension;
-import org.openqa.selenium.Keys;
-import org.openqa.selenium.Point;
-import org.openqa.selenium.WebDriverException;
-import org.openqa.selenium.WebElement;
-import org.openqa.selenium.internal.WrapsElement;
-import org.openqa.selenium.support.ui.FluentWait;
-
-import com.google.common.base.Predicate;
+import static net.thucidides.fragments.utils.XPathFunctions.containstext;
 
 public class Fragment<Parent extends IFragmentContext> implements WebElement, WrapsElement, IFragmentContext {
 	
 	/**
-	 * Injected with {@link FragmentFactory}
+	 * Injected with {@link net.thucidides.fragments.FragmentFactory}
 	 */
 	protected final FragmentFactory fragmentFactory = null;
 	

@@ -1,9 +1,9 @@
-package net.thucidides.fragments.locator;
-
-import java.lang.reflect.Field;
+package net.thucidides.fragments.locators;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.support.pagefactory.Annotations;
+
+import java.lang.reflect.Field;
 
 public class DefaultLocatorResolver implements ILocatorResolver {
 	

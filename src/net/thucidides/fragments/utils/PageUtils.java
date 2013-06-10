@@ -1,8 +1,8 @@
 package net.thucidides.fragments.utils;
 
-import net.thucidides.fragments.Fragment;
 import net.thucidides.fragments.IFragmentContext;
 import net.thucidides.fragments.PageWithFragments;
+import net.thucidides.fragments.elements.Fragment;
 
 public class PageUtils {
 	

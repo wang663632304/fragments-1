@@ -1,21 +1,19 @@
 package net.thucidides.fragments;
 
-import java.lang.reflect.Field;
-import java.lang.reflect.Proxy;
-import java.util.List;
-
-import net.thucidides.fragments.locator.DynamicLocatorFactory;
+import com.google.inject.Injector;
+import net.thucidides.fragments.elements.Fragment;
+import net.thucidides.fragments.locators.DynamicLocatorFactory;
 import net.thucidides.fragments.proxy.ElementLoader;
 import net.thucidides.fragments.proxy.FrameLoader;
 import net.thucidides.fragments.proxy.ListLoader;
 import net.thucidides.fragments.utils.PageUtils;
-import net.thucidides.fragments.utils.ReflectionObjectBuilder;
-
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.internal.WrapsElement;
 import org.openqa.selenium.support.pagefactory.ElementLocator;
 
-import com.google.inject.Injector;
+import java.lang.reflect.Field;
+import java.lang.reflect.Proxy;
+import java.util.List;
 
 /**
  * Creates page fragments
@@ -24,7 +22,7 @@ import com.google.inject.Injector;
  */
 public class FragmentFactory {
 	
-	private static final String FRAGMENT_FIELD_LOCATOR = "locator";
+	private static final String FRAGMENT_FIELD_LOCATOR = "locators";
 	private static final String FRAGMENT_FIELD_PARENT = "parent";
 	private static final String FRAGMENT_FIELD_WRAPPED = "wrapped";
 	private static final String FRAGMENT_FIELD_FACTORY = "";
@@ -51,7 +49,7 @@ public class FragmentFactory {
 	 * Creates frame which automatically switches search context.
 	 * 
 	 * @param type fragment type
-	 * @param locator IFrame locator
+	 * @param locator IFrame locators
 	 * @param name frame name
 	 * 
 	 * @return fragment instance
@@ -64,7 +62,7 @@ public class FragmentFactory {
 	 * Creates fragment given type.
 	 * 
 	 * @param type fragment type
-	 * @param locator fragment locator
+	 * @param locator fragment locators
 	 * @param name fragment name
 	 * 
 	 * @return fragment instance
@@ -77,7 +75,7 @@ public class FragmentFactory {
 	 * Creates list of fragments.
 	 * 
 	 * @param type fragment type
-	 * @param locator fragment locator
+	 * @param locator fragment locators
 	 * @param name fragment name
 	 * 
 	 * @return

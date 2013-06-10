@@ -1,6 +1,6 @@
-package net.thucidides.fragments.event;
+package net.thucidides.fragments.events;
 
-import net.thucidides.fragments.Fragment;
+import net.thucidides.fragments.elements.Fragment;
 
 public class FragmentEvent {
 	

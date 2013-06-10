@@ -1,12 +1,12 @@
-package net.thucidides.fragments.locator;
+package net.thucidides.fragments.locators;
+
+import org.openqa.selenium.By;
 
 import java.lang.reflect.Field;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.ServiceLoader;
-
-import org.openqa.selenium.By;
 
 
 public class ServiceLocatorResolver implements ILocatorResolver {

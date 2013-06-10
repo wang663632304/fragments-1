@@ -1,10 +1,10 @@
-package net.thucidides.fragments.locator;
-
-import java.lang.reflect.Field;
+package net.thucidides.fragments.locators;
 
 import org.openqa.selenium.SearchContext;
 import org.openqa.selenium.support.pagefactory.ElementLocator;
 import org.openqa.selenium.support.pagefactory.ElementLocatorFactory;
+
+import java.lang.reflect.Field;
 
 
 public class DynamicLocatorFactory implements ElementLocatorFactory {

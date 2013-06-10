@@ -1,12 +1,12 @@
-package net.thucidides.fragments.locator;
-
-import java.lang.reflect.Field;
-import java.util.List;
+package net.thucidides.fragments.locators;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.SearchContext;
 import org.openqa.selenium.WebElement;
+
+import java.lang.reflect.Field;
+import java.util.List;
 
 public class ByNotAvailable extends By {
 	

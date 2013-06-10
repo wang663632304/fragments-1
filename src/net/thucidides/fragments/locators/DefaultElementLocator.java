@@ -1,11 +1,11 @@
-package net.thucidides.fragments.locator;
-
-import java.util.List;
+package net.thucidides.fragments.locators;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.SearchContext;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.pagefactory.ElementLocator;
+
+import java.util.List;
 
 public class DefaultElementLocator implements ElementLocator {
 

@@ -1,4 +1,4 @@
-package net.thucidides.fragments.utils;
+package net.thucidides.fragments;
 
 import java.lang.reflect.Field;
 import java.util.HashMap;

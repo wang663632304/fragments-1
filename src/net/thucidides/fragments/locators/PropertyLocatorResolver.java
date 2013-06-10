@@ -1,15 +1,14 @@
-package net.thucidides.fragments.locator;
+package net.thucidides.fragments.locators;
+
+import net.thucidides.fragments.annotation.FindByExternal;
+import org.openqa.selenium.By;
+import org.openqa.selenium.support.ByIdOrName;
+import org.openqa.selenium.support.How;
 
 import java.lang.reflect.Field;
 import java.util.Properties;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
-import net.thucidides.fragments.annotation.FindByExternal;
-
-import org.openqa.selenium.By;
-import org.openqa.selenium.support.ByIdOrName;
-import org.openqa.selenium.support.How;
 
 
 public abstract class PropertyLocatorResolver implements ILocatorResolver {
@@ -35,7 +34,7 @@ public abstract class PropertyLocatorResolver implements ILocatorResolver {
 		String locator = properties.getProperty(getPropertyKey(field));
 		
 		if(locator == null || locator.length() == 0){
-			throw new IllegalArgumentException(String.format("Value for locator property [%s] missing.", getPropertyKey(field)));
+			throw new IllegalArgumentException(String.format("Value for locators property [%s] missing.", getPropertyKey(field)));
 		}
 		
 		Matcher locatorMatcher = LOCATOR_PATTERN.matcher(locator);
@@ -48,7 +47,7 @@ public abstract class PropertyLocatorResolver implements ILocatorResolver {
 			return new ByNotAvailable(field);
 		}
 		
-		throw new IllegalArgumentException(String.format("Incorrect locator syntax [%s].", locator));
+		throw new IllegalArgumentException(String.format("Incorrect locators syntax [%s].", locator));
 	}
 	
 	private static String convertUsing(String string){

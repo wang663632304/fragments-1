@@ -1,8 +1,9 @@
 package net.thucidides.fragments;
 
-import java.util.List;
-
+import net.thucidides.fragments.elements.Fragment;
 import org.openqa.selenium.By;
+
+import java.util.List;
 
 public interface IFragmentContext {
 	

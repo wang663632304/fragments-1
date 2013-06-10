@@ -8,8 +8,8 @@ public class StackTraceUtils {
 	
 	private final static String[] TRASH_PACKAGES = new String[]{
 		"sun.reflect", "java.lang.reflect", "java.util.concurrent",
-		"org.testng.internal", "org.openqa.selenium", 
-		"org.fragments.proxy", "com.astet.utils"
+		"org.openqa.selenium",
+		"net.thucidides.fragments.proxy", "net.thucidides.fragments.utils"
 	};
 	
 	public static Throwable cleanStackTrace(Throwable throwable){
