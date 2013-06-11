@@ -5,11 +5,11 @@ import com.google.common.eventbus.EventBus;
 
 import java.util.concurrent.Executors;
 
-public class FragmentEvents {
+public class FragmentEventBus {
 	
 	private static EventBus eventBus;
 	
-	private FragmentEvents(){}
+	private FragmentEventBus(){}
 	
 	public static EventBus getEventBus(){
 		if(eventBus == null){

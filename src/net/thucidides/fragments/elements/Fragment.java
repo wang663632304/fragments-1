@@ -6,7 +6,7 @@ import net.thucidides.fragments.FragmentSettings;
 import net.thucidides.fragments.IFragmentContext;
 import net.thucidides.fragments.PageWithFragments;
 import net.thucidides.fragments.events.FragmentEvent;
-import net.thucidides.fragments.events.FragmentEvents;
+import net.thucidides.fragments.events.FragmentEventBus;
 import net.thucidides.fragments.locators.DefaultElementLocator;
 import net.thucidides.fragments.utils.JSActions;
 import net.thucidides.fragments.utils.PageUtils;
@@ -216,7 +216,7 @@ public class Fragment<Parent extends IFragmentContext> implements WebElement, Wr
 	}
 	
 	protected void publishEvent(String description){
-		FragmentEvents.getEventBus().post(new FragmentEvent(this, description));
+		FragmentEventBus.getEventBus().post(new FragmentEvent(this, description));
 	}
 	
 	public String toString() {
