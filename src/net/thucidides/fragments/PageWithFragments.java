@@ -1,21 +1,17 @@
 package net.thucidides.fragments;
 
-import com.google.common.base.Predicate;
-import com.google.inject.Injector;
 import net.thucidides.fragments.elements.Fragment;
 import net.thucidides.fragments.locators.DefaultElementLocator;
-import net.thucydides.core.pages.PageObject;
 import org.openqa.selenium.*;
 import org.openqa.selenium.internal.WrapsElement;
 
-import javax.annotation.Nullable;
 import java.net.URL;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import static net.thucidides.fragments.utils.XPathFunctions.containstext;
 
-public class PageWithFragments extends PageObject implements IFragmentContext, SearchContext {
+public class PageWithFragments implements IFragmentContext, SearchContext, JavascriptExecutor {
 	
 	/**
 	 * Injected with {@link FragmentFactory}
@@ -26,21 +22,25 @@ public class PageWithFragments extends PageObject implements IFragmentContext, S
 	 * Injected with {@link FragmentFactory}
 	 */
 	private final String contextName = null;
+
+    /**
+     *  Injected with {@link FragmentFactory}
+     */
+	private final WebDriver webDriver = null;
+
+    public Object executeScript(String s, Object... objects) {
+        return ((JavascriptExecutor)webDriver).executeScript(s, objects);
+    }
+
+    public Object executeAsyncScript(String s, Object... objects) {
+        return ((JavascriptExecutor)webDriver).executeAsyncScript(s, objects);
+    }
+
+    public String getName() { return contextName; }
 	
-	public PageWithFragments(WebDriver webDriver, final Injector injector){
-		super(webDriver, new Predicate<PageObject>() {
-            public boolean apply(@Nullable PageObject input) {
-                FragmentFactory.initPageFragments((PageWithFragments)input, injector);
-                return true;
-            }
-        });
-	}
+	public WebElement findElement(By by) { return webDriver.findElement(by); }
 	
-	public String getName() { return contextName; }
-	
-	public WebElement findElement(By by) { return getDriver().findElement(by); }
-	
-	public List<WebElement> findElements(By by) { return getDriver().findElements(by); }
+	public List<WebElement> findElements(By by) { return webDriver.findElements(by); }
 		
 	public Fragment findFragment(By by) {
 		return findFragment(by, Fragment.class);
@@ -51,7 +51,7 @@ public class PageWithFragments extends PageObject implements IFragmentContext, S
 	}
 	
 	public <E extends Fragment<?>> E findFragment(By by, Class<E> type, String name) {
-		return fragmentFactory.createFragment(type, new DefaultElementLocator(getDriver(), by), name);
+		return fragmentFactory.createFragment(type, new DefaultElementLocator(webDriver, by), name);
 	}
 	
 	public List<Fragment> findFragments(By by) {
@@ -63,51 +63,51 @@ public class PageWithFragments extends PageObject implements IFragmentContext, S
 	}
 	
 	public <E extends Fragment<?>> List<E> findFragments(By by, Class<E> type, String name) {
-		return fragmentFactory.createList(type, new DefaultElementLocator(getDriver(), by), name);
+		return fragmentFactory.createList(type, new DefaultElementLocator(webDriver, by), name);
 	}
 	
-	public String getCurrentUrl() { return getDriver().getCurrentUrl(); }
+	public String getCurrentUrl() { return webDriver.getCurrentUrl(); }
 
-	public String getTitle() { return getDriver().getTitle(); }
+	public String getTitle() { return webDriver.getTitle(); }
 
-	public String getPageSource() { return getDriver().getPageSource(); }
+	public String getPageSource() { return webDriver.getPageSource(); }
 
-	public void navigateBack() { getDriver().navigate().back(); }
+	public void navigateBack() { webDriver.navigate().back(); }
 
-	public void navigateForward() {	getDriver().navigate().forward(); }
+	public void navigateForward() {	webDriver.navigate().forward(); }
 	
-	public void navigateTo(String url) { getDriver().navigate().to(url); }
+	public void navigateTo(String url) { webDriver.navigate().to(url); }
 
-	public void navigateTo(URL url) { getDriver().navigate().to(url); }
+	public void navigateTo(URL url) { webDriver.navigate().to(url); }
 	
-	public void refresh() { getDriver().navigate().refresh(); }
+	public void refresh() { webDriver.navigate().refresh(); }
 	
 	public void setImplicitWait(long time, TimeUnit unit){
-		getDriver().manage().timeouts().implicitlyWait(time, unit);
+		webDriver.manage().timeouts().implicitlyWait(time, unit);
 	}
 	
-	public void addCookie(Cookie cookie) { getDriver().manage().addCookie(cookie); }
+	public void addCookie(Cookie cookie) { webDriver.manage().addCookie(cookie); }
 
-	public void deleteCookieNamed(String name) { getDriver().manage().deleteCookieNamed(name); }
+	public void deleteCookieNamed(String name) { webDriver.manage().deleteCookieNamed(name); }
 
-	public void deleteCookie(Cookie cookie) { getDriver().manage().deleteCookie(cookie); }
+	public void deleteCookie(Cookie cookie) { webDriver.manage().deleteCookie(cookie); }
 
-	public void deleteAllCookies() { getDriver().manage().deleteAllCookies(); }
+	public void deleteAllCookies() { webDriver.manage().deleteAllCookies(); }
 
-	public Cookie getCookieNamed(String name) { return getDriver().manage().getCookieNamed(name); }
+	public Cookie getCookieNamed(String name) { return webDriver.manage().getCookieNamed(name); }
 	
 	public void switchToFrame(WebElement webElement){
 		if(webElement instanceof WrapsElement){
 			webElement = ((WrapsElement) webElement).getWrappedElement();
 		}
 		
-		getDriver().switchTo().frame(webElement);
+		webDriver.switchTo().frame(webElement);
 	}
 	
-	public void switchToPage(){ getDriver().switchTo().defaultContent(); }
+	public void switchToPage(){ webDriver.switchTo().defaultContent(); }
 	
 	public boolean isTextPresent(String text) {
-		return getDriver().getPageSource().toLowerCase().contains(text.toLowerCase());
+		return webDriver.getPageSource().toLowerCase().contains(text.toLowerCase());
 	}
 	
 	public boolean isTextDisplayed(String text){
@@ -119,4 +119,6 @@ public class PageWithFragments extends PageObject implements IFragmentContext, S
 		return isTextPresent(value) && isElementVisible(By
 				.xpath(String.format("//*[%s]", containstext("@value", value))));
 	}
+
+    public boolean isElementVisible(By by){ return findFragment(by).isDisplayed(); }
 }

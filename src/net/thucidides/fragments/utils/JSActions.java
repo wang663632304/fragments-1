@@ -8,7 +8,7 @@ import static net.thucidides.fragments.utils.PageUtils.getParentPage;
 public class JSActions {
 	
 	public static JavascriptExecutor getJSExecutor(Fragment fragment){
-		return new PageJSExecutor(getParentPage(fragment));
+		return getParentPage(fragment);
 	}
 	
 	public static void click(Fragment fragment){

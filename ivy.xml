@@ -5,6 +5,7 @@
 	
 	<dependencies>
 		<dependency org="com.google.guava" name="guava" rev="14.0.1"/>
-		<dependency org="net.thucydides" name="thucydides-core" rev="0.9.125"/>
+        <dependency org="com.google.inject" name="guice" rev="3.0"/>
+        <dependency org="org.seleniumhq.selenium" name="selenium-java" rev="2.33.0"/>
 	</dependencies>
 </ivy-module>

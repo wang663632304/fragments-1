@@ -7,6 +7,7 @@ import net.thucidides.fragments.proxy.ElementLoader;
 import net.thucidides.fragments.proxy.FrameLoader;
 import net.thucidides.fragments.proxy.ListLoader;
 import net.thucidides.fragments.utils.PageUtils;
+import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.internal.WrapsElement;
 import org.openqa.selenium.support.pagefactory.ElementLocator;
@@ -30,6 +31,7 @@ public class FragmentFactory {
 	
 	private static final String PAGE_FIELD_FACTORY = "fragmentFactory";
 	private static final String PAGE_FIELD_NAME = "contextName";
+    private static final String PAGE_FIELD_WEB_DRIVER = "webDriver";
 	
 	private final IFragmentContext parentContext;
 	
@@ -85,28 +87,31 @@ public class FragmentFactory {
 				new Class[]{List.class}, new ListLoader<>(type, locator, this, name));
 	}
 	
-	public static void initPageFragments(PageWithFragments page, Injector injector){
+	public static <Page extends PageWithFragments> Page initPage(Class<Page> pageClass, WebDriver webDriver, Injector injector){
+        Page page = initContextObject(pageClass);
+
 		FragmentFactory fragmentFactory = new FragmentFactory(page, injector);
 		
 		try {
 			new ReflectionObjectBuilder<PageWithFragments>()
+                .set(PageWithFragments.class, PAGE_FIELD_WEB_DRIVER, webDriver)
 				.set(PageWithFragments.class, PAGE_FIELD_FACTORY, fragmentFactory)
-				.set(PageWithFragments.class, PAGE_FIELD_NAME, page.getClass().getSimpleName())
+				.set(PageWithFragments.class, PAGE_FIELD_NAME, pageClass.getSimpleName())
 			.assign(page);
 		} catch (IllegalAccessException | NoSuchFieldException | SecurityException ex) {
-			throw new RuntimeException("Failed to inject fields into frgament context.", ex);
+			throw new RuntimeException("Failed to inject fields into fragment context.", ex);
 		}
 		
 		decorateFields(page, PageWithFragments.class, 
 				new FragmentDecorator(new DynamicLocatorFactory(page), fragmentFactory));
 		
-		if(injector != null){
-			injector.injectMembers(page);
-		}
+		if(injector != null){ injector.injectMembers(page); }
+
+        return page;
 	}
 	
 	private <F extends Fragment<?>> F initFragment(Class<F> klass, WebElement wrapped, String name, String locator){
-		F fragment = initFragmentObject(klass);
+		F fragment = initContextObject(klass);
 		
 		FragmentFactory fragmentFactory = new FragmentFactory(fragment, injector);
 		
@@ -122,12 +127,10 @@ public class FragmentFactory {
 			throw new RuntimeException(String.format("Failed to inject fields into [%s]", name), ex);
 		}
 		
-		decorateFields(fragment, Fragment.class, 
+		decorateFields(fragment, Fragment.class,
 				new FragmentDecorator(new DynamicLocatorFactory(wrapped), fragmentFactory));
 		
-		if(injector != null){
-			injector.injectMembers(fragment);
-		}
+		if(injector != null){ injector.injectMembers(fragment); }
 		
 		return fragment;
 	}
@@ -156,8 +159,8 @@ public class FragmentFactory {
 			throw new RuntimeException(String.format("Failed to decorate [%s] fields", fragmentContext), ex);
 		}
 	}
-	
-	private static <T extends Fragment> T initFragmentObject(Class<T> type){
+
+	private static <T extends IFragmentContext> T initContextObject(Class<T> type){
 		try{
 			return type.getConstructor().newInstance();
 		} catch (Exception ex){

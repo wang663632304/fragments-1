@@ -2,10 +2,13 @@ package net.thucidides.fragments.locators;
 
 import net.thucidides.fragments.annotation.FindByExternal;
 import org.openqa.selenium.By;
+import org.openqa.selenium.SearchContext;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ByIdOrName;
 import org.openqa.selenium.support.How;
 
 import java.lang.reflect.Field;
+import java.util.List;
 import java.util.Properties;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -34,13 +37,15 @@ public abstract class PropertyLocatorResolver implements ILocatorResolver {
 		String locator = properties.getProperty(getPropertyKey(field));
 		
 		if(locator == null || locator.length() == 0){
-			throw new IllegalArgumentException(String.format("Value for locators property [%s] missing.", getPropertyKey(field)));
+			throw new IllegalArgumentException(String
+                    .format("Value for locators property [%s] missing.", getPropertyKey(field)));
 		}
 		
 		Matcher locatorMatcher = LOCATOR_PATTERN.matcher(locator);
 		
 		if(locatorMatcher.matches()){
-			return buildBy(convertHow(locatorMatcher.group(1)), convertUsing(locatorMatcher.group(2)));
+            return wrapWithPropertyName(buildBy(convertHow(locatorMatcher.group(1)),
+                    convertUsing(locatorMatcher.group(2))), getPropertyKey(field));
 		}
 		
 		if(NOT_AVAILABLE_PATTERN.matcher(locator).matches()){
@@ -82,7 +87,23 @@ public abstract class PropertyLocatorResolver implements ILocatorResolver {
 	        throw new IllegalArgumentException("Cannot determine how to locate element " + how);
 	    }
 	}
-	
+
+    private static By wrapWithPropertyName(final By by, final String property){
+        return new By() {
+            public List<WebElement> findElements(SearchContext context) {
+                return by.findElements(context);
+            }
+
+            public WebElement findElement(SearchContext context) {
+                return by.findElement(context);
+            }
+
+            public String toString() {
+                return String.format("%s : %s", property, by);
+            }
+        };
+    }
+
 	private static String getPropertyKey(Field field){
 		return field.getAnnotation(FindByExternal.class).value();
 	}
