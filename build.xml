@@ -3,7 +3,7 @@
 
     <property name="compile.output" value="target/bin"/>
     <property name="compile.lib" value="lib"/>
-    <property name="jar.file" value="target/fragments.jar"/>
+    <property name="jar.file" value="target/thucydides-fragments.jar"/>
 
     <target name="clean">
         <delete>

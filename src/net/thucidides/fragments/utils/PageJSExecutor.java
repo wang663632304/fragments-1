@@ -13,10 +13,10 @@ public class PageJSExecutor implements JavascriptExecutor {
 	}
 
 	public Object executeAsyncScript(String script, Object... args) {
-		return pageObject.evaluateJavascript(script, args);
+        throw new NoSuchMethodError("PageObjects cannot execute javascript asycnchroniously.");
 	}
 	
 	public Object executeScript(String script, Object... args) {
-		throw new NoSuchMethodError("PageObjects cannot execute javascript asycnchroniously.");
+        return pageObject.evaluateJavascript(script, args);
 	}
 }
